@@ -19,10 +19,10 @@ module.exports = {
       'error',
       {
         singleQuote: true,
-        semi: true,
-        bracketSpacing: true,
-        arrowParens: 'avoid',
-        endOfLine: 'auto'
+        semi: true
+        // bracketSpacing: true,
+        // arrowParens: 'avoid'
+        // endOfLine: 'auto'
       }
     ]
   }
