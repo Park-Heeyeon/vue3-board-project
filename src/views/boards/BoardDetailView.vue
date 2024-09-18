@@ -1,8 +1,8 @@
 <template>
   <div>
-    <h2>제목</h2>
-    <p>내용</p>
-    <p class="text-muted">2020-01-01</p>
+    <h2>{{ boardDetail.title }}</h2>
+    <p>{{ boardDetail.content }}</p>
+    <p class="text-muted">{{ boardDetail.createdAt }}</p>
     <hr class="my-4" />
     <div class="row g-2">
       <div class="col-auto">
@@ -19,18 +19,53 @@
         <button class="btn btn-outline-primary" @click="goEditPage">수정</button>
       </div>
       <div class="col-auto">
-        <button class="btn btn-outline-danger">삭제</button>
+        <button class="btn btn-outline-danger" @click="delBoard">삭제</button>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { useRoute, useRouter } from 'vue-router';
+import { useRouter } from 'vue-router';
+import { getBoardById, deleteBoard } from '@/api/boards';
+import { ref } from 'vue';
 
-const route = useRoute();
+const props = defineProps({
+  id: Number
+});
+
+// const route = useRoute();
 const router = useRouter();
-const id = route.params.id;
+// const id = route.params.id;
+
+const boardDetail = ref({});
+
+const getBoardDetail = async () => {
+  try {
+    const { data } = await getBoardById(props.id);
+    setBoardDetail(data);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const setBoardDetail = ({ title, content, createdAt }) => {
+  boardDetail.value.title = title;
+  boardDetail.value.content = content;
+  boardDetail.value.createdAt = createdAt;
+};
+
+const delBoard = () => {
+  try {
+    if (!confirm('삭제하시겠습니까?')) {
+      return;
+    }
+    deleteBoard(props.id);
+    goListPage();
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 const goListPage = () => {
   router.push({
@@ -41,9 +76,11 @@ const goListPage = () => {
 const goEditPage = () => {
   router.push({
     name: 'BoardEdit',
-    params: { id }
+    params: { id: props.id }
   });
 };
+
+getBoardDetail();
 </script>
 
 <style lang="scss" scoped></style>

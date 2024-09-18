@@ -12,6 +12,10 @@
         ></BoardItem>
       </div>
     </div>
+    <hr class="my-4" />
+    <AppCard>
+      <BoardDetailView :id="1"></BoardDetailView>
+    </AppCard>
   </div>
 </template>
 
@@ -20,12 +24,21 @@ import { ref } from 'vue';
 import { getBoards } from '@/api/boards';
 import BoardItem from '@/components/boards/BoardItem.vue';
 import { useRouter } from 'vue-router';
+import BoardDetailView from './BoardDetailView.vue';
+import AppCard from '../../components/AppCard.vue';
 
 const router = useRouter();
 const boards = ref([]);
 
-const fetchBoards = () => {
-  boards.value = getBoards();
+const fetchBoards = async () => {
+  try {
+    // (const {data: boards.value = await getBoards();})도 가능하다.
+    const { data } = await getBoards();
+    boards.value = data;
+    router.push({ name: 'BoardList' });
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 const goBoardDetailPage = (id) => {

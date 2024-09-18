@@ -1,12 +1,21 @@
-// axios 모듈로 JSON 데이터 조회
-const boards = [
-  { id: 1, title: '제목1', content: '내용1', createdAt: '2020-01-01' },
-  { id: 2, title: '제목2', content: '내용2', createdAt: '2020-01-02' },
-  { id: 3, title: '제목3', content: '내용3', createdAt: '2020-01-03' },
-  { id: 4, title: '제목4', content: '내용4', createdAt: '2020-01-04' },
-  { id: 5, title: '제목5', content: '내용5', createdAt: '2020-01-05' }
-];
+import axios from 'axios';
 
 export function getBoards() {
-  return boards;
+  return axios.get('http://localhost:3001/boards');
+}
+
+// id를 이용한 게시판 상세 데이터 조회
+export function getBoardById(id) {
+  return axios.get(`http://localhost:3001/boards/${id}`);
+}
+
+export function createBoard(data) {
+  return axios.post('http://localhost:3001/boards', data);
+}
+
+export function updateBoard(id, data) {
+  return axios.put(`http://localhost:3001/boards/${id}`, data);
+}
+export function deleteBoard(id) {
+  return axios.delete(`http://localhost:3001/boards/${id}`);
 }

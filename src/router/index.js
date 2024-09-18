@@ -16,7 +16,15 @@ const routes = [
   { path: '/about', name: 'About', component: AboutView },
   { path: '/boards', name: 'BoardList', component: BoardListView },
   { path: '/boards/create', name: 'BoardCreate', component: BoardCreateView },
-  { path: '/boards/:id', name: 'BoardDetail', component: BoardDetailView },
+  {
+    path: '/boards/:id',
+    name: 'BoardDetail',
+    component: BoardDetailView,
+    // props: true,
+    props: (route) => ({
+      id: parseInt(route.params.id)
+    })
+  },
   { path: '/boards/:id/edit', name: 'BoardEdit', component: BoardEditView },
   { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFoundView },
   {
