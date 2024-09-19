@@ -31,7 +31,7 @@ import { getBoardById, deleteBoard } from '@/api/boards';
 import { ref } from 'vue';
 
 const props = defineProps({
-  id: Number
+  id: String
 });
 
 // const route = useRoute();

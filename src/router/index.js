@@ -20,10 +20,10 @@ const routes = [
     path: '/boards/:id',
     name: 'BoardDetail',
     component: BoardDetailView,
-    // props: true,
-    props: (route) => ({
-      id: parseInt(route.params.id)
-    })
+    props: true
+    // props: (route) => ({
+    //   id: parseInt(route.params.id)
+    // })
   },
   { path: '/boards/:id/edit', name: 'BoardEdit', component: BoardEditView },
   { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFoundView },
