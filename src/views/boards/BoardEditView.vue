@@ -21,7 +21,7 @@ import { ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { getBoardById, updateBoard } from '@/api/boards';
 import BoardForm from '@/components/boards/BoardForm.vue';
-import AppAlert from '../../components/AppAlert.vue';
+import AppAlert from '../../components/app/AppAlert.vue';
 
 const router = useRouter();
 const route = useRoute();

@@ -6,12 +6,13 @@
     <hr class="my-4" />
     <div class="row g-3">
       <AppGrid :items="boards">
-        <template v-slot="{ item }">
+        <template #default="{ item }">
           <BoardItem
             :title="item.title"
             :content="item.content"
             :created-at="item.createdAt"
             @click="goBoardDetailPage(item.id)"
+            @modal="openModal(item)"
           />
         </template>
       </AppGrid>
@@ -21,9 +22,20 @@
       :page-count="pageCount"
       @page="(page) => (params._page = page)"
     />
+    <!--
+        <Teleport />는 감싸진 요소를 to 속성에 대입한 요소에 대입하는 역할을 한다.
+    -->
+    <Teleport to="#modal">
+      <BoardModal
+        v-model="showModal"
+        :title="modalTitle"
+        :content="modalContent"
+        :created-at="modalCreatedAt"
+      />
+    </Teleport>
     <hr class="my-5" />
     <AppCard>
-      <BoardDetailView id="1"></BoardDetailView>
+      <BoardDetailView id="1" />
     </AppCard>
   </div>
 </template>
@@ -31,12 +43,8 @@
 <script setup>
 import { computed, ref, watchEffect } from 'vue';
 import { getBoards } from '@/api/boards';
-import BoardItem from '@/components/boards/BoardItem.vue';
 import { useRouter } from 'vue-router';
 import BoardDetailView from './BoardDetailView.vue';
-import AppCard from '@/components/AppCard.vue';
-import AppPagination from '@/components/AppPagination.vue';
-import AppGrid from '@/components/AppGrid.vue';
 import BoardFilter from './BoardFilter.vue';
 
 const router = useRouter();
@@ -89,6 +97,18 @@ const goBoardDetailPage = (id) => {
  * watchEffect는 watch와 다르게 매개변수로 받은 메소드를 초기에 한 번 실행을 시킨다.
  */
 watchEffect(fetchBoards);
+
+const showModal = ref(false);
+const modalTitle = ref('');
+const modalContent = ref('');
+const modalCreatedAt = ref('');
+
+const openModal = ({ title, content, createdAt }) => {
+  showModal.value = true;
+  modalTitle.value = title;
+  modalContent.value = content;
+  modalCreatedAt.value = createdAt;
+};
 </script>
 
 <style lang="scss" scoped></style>
