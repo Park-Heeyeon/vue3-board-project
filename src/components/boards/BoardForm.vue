@@ -4,10 +4,12 @@
       <label for="title" class="form-label">제목</label>
       <input
         id="title"
+        v-focus
+        v-color="'blue'"
         :value="title"
-        @input="$emit('update:title', $event.target.value)"
         type="text"
         class="form-control"
+        @input="$emit('update:title', $event.target.value)"
       />
     </div>
     <div class="mb-3">
@@ -23,9 +25,9 @@
       <textarea
         id="content"
         :value="content"
-        @input="$emit('update:content', $event.target.value)"
         class="form-control"
         rows="3"
+        @input="$emit('update:content', $event.target.value)"
       ></textarea>
     </div>
     <div class="d-flex gap-2 mt-4">
@@ -35,6 +37,15 @@
 </template>
 
 <script setup>
+/**
+ * 커스텀 디렉티브 생성
+ */
+// const vFocus = {
+//   mounted: (el) => {
+//     el.focus();
+//   }
+// };
+
 defineProps({
   title: String,
   content: String

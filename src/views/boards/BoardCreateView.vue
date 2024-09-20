@@ -1,11 +1,16 @@
 <template>
   <div>
-    <h2>게시글 등록</h2>
+    <h2 @click="visibleForm = !visibleForm">게시글 등록</h2>
     <hr class="my-4" />
     <!--
       sumbit 이벤트는 자식 컴포넌트의 최상위 루트 요소에 대입이 된다.
     -->
-    <BoardForm v-model:title="board.title" v-model:content="board.content" @submit.prevent="save">
+    <BoardForm
+      v-if="visibleForm"
+      v-model:title="board.title"
+      v-model:content="board.content"
+      @submit.prevent="save"
+    >
       <template #actions>
         <button type="button" class="btn btn-outline-dark me-2" @click="goListPage">목록</button>
         <button type="submit" class="btn btn-primary">저장</button>
@@ -45,6 +50,7 @@ const goListPage = () => {
     name: 'BoardList'
   });
 };
+const visibleForm = ref(true);
 </script>
 
 <style lang="scss" scoped></style>

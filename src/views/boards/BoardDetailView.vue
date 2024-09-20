@@ -2,7 +2,7 @@
   <div>
     <h2>{{ boardDetail.title }}</h2>
     <p>{{ boardDetail.content }}</p>
-    <p class="text-muted">{{ boardDetail.createdAt }}</p>
+    <p class="text-muted">{{ $dayjs(boardDetail.createdAt).format('YYYY. MM. DD HH:mm:ss') }}</p>
     <hr class="my-4" />
     <div class="row g-2">
       <div class="col-auto">

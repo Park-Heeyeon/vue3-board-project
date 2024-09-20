@@ -4,7 +4,7 @@
     <p class="card-text">
       {{ content }}
     </p>
-    <p class="text-muted">{{ createdAt }}</p>
+    <p class="text-muted">{{ createdDate }}</p>
     <template #footer>
       <div class="d-flex flex-row-reverse">
         <!-- click 이벤트의 stop 속성은 이벤트 버블링을 막아주는 속성이다. -->
@@ -17,7 +17,9 @@
 </template>
 
 <script setup>
-defineProps({
+import { computed, inject } from 'vue';
+
+const props = defineProps({
   title: {
     type: String,
     Required: true
@@ -31,6 +33,8 @@ defineProps({
   }
 });
 defineEmits(['modal']);
+const dayjs = inject('dayjs'); // provide()/inject()
+const createdDate = computed(() => dayjs(props.createdAt).format('YYYY. MM. DD HH:mm:ss'));
 </script>
 
 <style lang="scss" scoped></style>
